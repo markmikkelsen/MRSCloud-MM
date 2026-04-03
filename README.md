@@ -2,7 +2,7 @@
 
 MRSCloud is a cloud-based MATLAB executable for performing metabolites simulation to generate basis sets for magnetic resonance spectroscopy (MRS) data. Visit <https://braingps.mricloud.org/mrs-cloud> for the online platform. Registration is required to use.
 
-Source code is published on Github <https://github.com/shui5/MRSCloud>
+For advanced users, visit <https://github.com/shui5/MRSCloud> for the original source code.
 
 ## Features
 
@@ -64,23 +64,21 @@ Visit <https://braingps.mricloud.org/mrs-cloud> to use MRSCloud.
 7. Download the basis set (in .zip format) when it is ready.
 8. Unzip the file and the basis set is saved in two formats (.BASIS and .mat). The basis set in .BASIS format is compatible with LCModel and the one in .mat format is compatible with Osprey.
 9. The .mat basis set contains all FIDs and spectral data which can be converted to other formats for other fitting tools.
-10. For advanced users, visit <https://github.com/shui5/MRSCloud> for the source code.
-11. Setup parameters in `simMRS.json`
-12. Run `run_simulations_cloud.m`
-13. Replace own tau time, TE1, waveforms etc. in `load_parameters.m`
-14. Make sure to remove FID-A and Gannet from your MATLAB path.
+10. Setup parameters in `simMRS.json`
+11. Run `run_simulations_cloud.m`
+12. Make sure to remove FID-A and Gannet from your MATLAB path.
 
 ## Contact
 
-For any questions, feedback, suggestions, or critique, please contact Steve Hui (<stevehui@jhu.edu>) or Richard Edden (<edden@jhu.edu>).
+For any questions, feedback, suggestions, or critique, please contact Mark Mikkelsen (<mam4041@med.cornell.edu>).
 
 ## Citation
 
 Should you publish material that made use of MRSCloud, please cite the following publications:
 
-- Hui SCN, Saleh MG, Zöllner HJ, Oeltzschner G, Fan H, Li Y, Song Y, Jiang H, Near J, Lu H, Mori S, Edden RAE. MRSCloud: A cloud-based MRS tool for basis set simulation. Magn Reson Med. 2022 Jul 1. doi: 10.1002/mrm.29370. Epub ahead of print. PMID: 35775808.
+- Hui SCN, Saleh MG, Zöllner HJ, Oeltzschner G, Fan H, Li Y, Song Y, Jiang H, Near J, Lu H, Mori S, Edden RAE. MRSCloud: A cloud‐based MRS tool for basis set simulation. Magn Reson Med. 2022;88(5):1994-2004. doi:[10.1002/mrm.29370](https://onlinelibrary.wiley.com/doi/10.1002/mrm.29370)
 
-- Simpson R, Devenyi GA, Jezzard P, Hennessy TJ, Near J. Advanced processing and simulation of MRS data using the FID appliance (FID-A)-An open source, MATLAB-based toolkit. Magn Reson Med. 2017 Jan;77(1):23-33. doi: 10.1002/mrm.26091. Epub 2015 Dec 30. PMID: 26715192.
+- Simpson R, Devenyi GA, Jezzard P, Hennessy TJ, Near J. Advanced processing and simulation of MRS data using the FID appliance (FID‐A)—An open source, MATLAB‐based toolkit. Magn Reson Med. 2017;77(1):23-33. doi:[10.1002/mrm.26091](https://onlinelibrary.wiley.com/doi/10.1002/mrm.26091)
 
 ## Acknowledgements
 
