@@ -84,8 +84,7 @@ for ii = 1:length(MRS_opt)
     d4_edit1 = sim_evolve(d4_edit1, MRS_opt(ii).H, delays(2)/1e3);
 
     %% AFP pulse x-direction
-    parfor X = 1:length(MRS_opt(ii).x)
-    %for X = 1:length(MRS_opt(ii).x) % uncomment this line if parfor is unavailable, scnh
+    parfor (X = 1:length(MRS_opt(ii).x), MRS_opt.parallelize.workers)
 
         % RF 1
         d1_x{X} = apply_propagator_refoc(d1_edit1, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X}); %#ok<*PFBNS> 
@@ -136,8 +135,7 @@ for ii = 1:length(MRS_opt)
     end
 
     %% AFP pulse y-direction
-    parfor Y = 1:length(MRS_opt(ii).y)
-    %for Y = 1:length(MRS_opt(ii).y)  %Use this if you do have the MATLAB parallel processing toolbox
+    parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
 
         % RF 3
         d1_y{Y} = apply_propagator_refoc(d_Ax, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});

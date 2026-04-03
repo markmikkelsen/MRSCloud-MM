@@ -143,11 +143,11 @@ else
                     editWaveform{3} = 'dl_Philips_4_58_1_90.pta';  % name of 1st dual editing pulse waveform. [4.58ppm 1.90ppm]
                     editWaveform{4} = 'dl_Philips_4_18_1_90.pta';  % name of 2nd dual editing pulse waveform. [4.18ppm 1.90ppm]
                 elseif strcmp(MRS_opt.seq, 'HERMES')
-                    %     editWaveform{1} = 'sg100_100_0_14ms_88hz.pta'; % name of 1st single editing pulse waveform. [4.56ppm]
-                    %     editWaveform{2} = 'sg100_100_0_14ms_88hz.pta'; % name of 2nd single editing pulse waveform. [1.9ppm]
-                    %     editWaveform{3} = 'dl_Philips_4_56_1_90.pta';  % name of 1st dual editing pulse waveform. [4.56ppm 1.90ppm]
-                    %     editWaveform{4} = 'sg100_100_0_14ms_88hz.pta'; % name of non-editing pulse waveform. [non-editing]
-                    % elseif strcmp(MRS_opt.seq, 'HERMES_UHP')
+                    % editWaveform{1} = 'sg100_100_0_14ms_88hz.pta'; % name of 1st single editing pulse waveform. [4.56ppm]
+                    % editWaveform{2} = 'sg100_100_0_14ms_88hz.pta'; % name of 2nd single editing pulse waveform. [1.9ppm]
+                    % editWaveform{3} = 'dl_Philips_4_56_1_90.pta';  % name of 1st dual editing pulse waveform. [4.56ppm 1.90ppm]
+                    % editWaveform{4} = 'sg100_100_0_14ms_88hz.pta'; % name of non-editing pulse waveform. [non-editing]
+                % elseif strcmp(MRS_opt.seq, 'HERMES_UHP')
                     editWaveform{1} = 'SGeddit.txt'; % name of 1st single editing pulse waveform. [4.56ppm]
                     editWaveform{2} = 'SGeddit.txt'; % name of 2nd single editing pulse waveform. [1.9ppm]
                     editWaveform{3} = 'dl_Philips_4_56_1_90.pta';  % name of 1st dual editing pulse waveform. [4.56ppm 1.90ppm]
@@ -507,30 +507,16 @@ if any(strcmp(MRS_opt.seq, {'UnEdited_se_MRSI', 'Edited_se_MRSI'}))
     % excWaveform   = 'univ_spreddenrex.pta'; % 'Philips_spredrex.pta'
     % RF_struct     = io_loadRFwaveform(excWaveform,'exc',0);
     % MRS_opt.excRF = RF_struct;
-    if MRS_opt.parallelize
-        parfor X = 1:length(MRS_opt.x)
-            Qexc{X} = calc_shapedRF_propagator_exc(MRS_opt.H, MRS_opt.excRF, MRS_opt.excTp, MRS_opt.exc_flipAngle, 0, MRS_opt.y(X), MRS_opt.Gx_exc);
-        end
-    else
-        Qexc = cell(1,length(MRS_opt.x));
-        for X = 1:length(MRS_opt.x)
-            Qexc{X} = calc_shapedRF_propagator_exc(MRS_opt.H, MRS_opt.excRF, MRS_opt.excTp, MRS_opt.exc_flipAngle, 0, MRS_opt.y(X), MRS_opt.Gx_exc);
-        end
+    parfor (X = 1:length(MRS_opt.x), MRS_opt.parallelize.workers)
+        Qexc{X} = calc_shapedRF_propagator_exc(MRS_opt.H, MRS_opt.excRF, MRS_opt.excTp, MRS_opt.exc_flipAngle, 0, MRS_opt.y(X), MRS_opt.Gx_exc);
     end
     MRS_opt.Qexc = Qexc;
 end
 
 % Create propagators for refocusing pulse
 if any(strcmp(MRS_opt.seq, {'UnEdited', 'MEGA', 'HERMES', 'HERCULES', 'HERMES_GABA_GSH_EtOH', 'MQC'}))
-    if MRS_opt.parallelize
-        parfor X = 1:length(MRS_opt.x)
-            Qrefoc{X} = calc_shapedRF_propagator_refoc(MRS_opt.H, MRS_opt.refRF, MRS_opt.refTp, MRS_opt.flipAngle, 0, MRS_opt.y(X), MRS_opt.Gx); %#ok<*PFBNS>
-        end
-    else
-        Qrefoc = cell(1,length(MRS_opt.x));
-        for X = 1:length(MRS_opt.x)
-            Qrefoc{X} = calc_shapedRF_propagator_refoc(MRS_opt.H, MRS_opt.refRF, MRS_opt.refTp, MRS_opt.flipAngle, 0, MRS_opt.y(X), MRS_opt.Gx); %#ok<*PFBNS>
-        end
+    parfor (X = 1:length(MRS_opt.x), MRS_opt.parallelize.workers)
+        Qrefoc{X} = calc_shapedRF_propagator_refoc(MRS_opt.H, MRS_opt.refRF, MRS_opt.refTp, MRS_opt.flipAngle, 0, MRS_opt.y(X), MRS_opt.Gx); %#ok<*PFBNS>
     end
     MRS_opt.Qrefoc = Qrefoc;
 end

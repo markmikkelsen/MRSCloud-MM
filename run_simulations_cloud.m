@@ -28,9 +28,10 @@ if ~exist(save_dir,'dir')
 end
 delete([save_dir,'/*']); % Empty save_dir
 
-% Check if Parallel Computing Toolbox is installed
-% Will be important for further into the simulation code
-MRS_opt.parallelize = toolbox_check;
+% Check if Parallel Computing Toolbox is installed so that calculations can
+% be accelerated
+MRS_opt.parallelize.flag    = toolbox_check;
+MRS_opt.parallelize.workers = MRS_opt.parallelize.flag * maxNumCompThreads;  % 0 = serial, N = parallel
 
 % Check timings
 assert(TE == sum(taus), 'TE (%g ms) does not equal sum of taus (%g ms).', TE, sum(taus));

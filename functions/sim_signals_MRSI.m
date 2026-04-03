@@ -52,9 +52,8 @@ for ii = 1:length(MRS_opt)
     % fully slice-selective sequence
     switch (mega_or_hadam)
         case 'UnEdited_se_MRSI'
-             parfor Y=1:length(MRS_opt(ii).y) %Use this if you do have the MATLAB parallel processing toolbox
+             parfor (Y=1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
                 [outA_temp{Y}]     = sim_press_shaped_ultrafast_exc(MRS_opt(ii),MRS_opt(ii).Qexc{Y},MRS_opt(ii).d_eqm);
- %               d_A = MRS_opt(ii).d;
                 outA_temp{Y}=sim_apply_pfilter(outA_temp{Y},MRS_opt(ii).H,+1);     %Apply p_filter
                 outA_temp{Y}=sim_evolve(outA_temp{Y},MRS_opt(ii).H,(delays(1))/1000);
                 [outA_temp{Y}]     = sim_press_shaped_ultrafast_Ref2(MRS_opt(ii),MRS_opt(ii).Qrefoc{Y},outA_temp{Y});
@@ -66,8 +65,7 @@ for ii = 1:length(MRS_opt)
             MRS_opt(ii).editRFonB  = rf_freqshift(MRS_opt(ii).editRF2,MRS_opt(ii).editTp,(MRS_opt(ii).centreFreq-editOnFreq2)*MRS_opt(ii).Bfield*MRS_opt(ii).gamma/1e6);
             MRS_opt(ii).QoutONB    = calc_shapedRF_propagator_edit(MRS_opt(ii).H,MRS_opt(ii).editRFonB,MRS_opt(ii).editTp,MRS_opt(ii).edit_flipAngle,0);
             
-            parfor Y=1:length(MRS_opt(ii).y)
-                %for Y=1:length(MRS_opt(ii).y)
+            parfor (Y=1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
                 [d{Y}]  = sim_press_shaped_ultrafast_exc(MRS_opt(ii),MRS_opt(ii).Qexc{Y},MRS_opt(ii).d_eqm);
                 d{Y}    = sim_apply_pfilter(d{Y},MRS_opt(ii).H,+1);
                 d{Y}    = sim_evolve(d{Y},MRS_opt(ii).H,(delays(1))/1000);

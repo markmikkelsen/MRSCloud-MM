@@ -84,10 +84,10 @@ for ii = 1:length(MRS_opt)
                         % ********************PARAMETERS**********************************
                         % set up exact timing - based on 'normal' pulse set on Philips 3T - SH 07252019
                         taus = [MRS_opt(ii).TE1/2, ...                                           %middleEXC pulse to middleREFOC1
-                            ((TE/2 + MRS_opt(ii).TE1/2)/2) - MRS_opt(ii).TE1/2, ...          %middleREFOC1 to middle 1st EDITING
-                            (TE/2 + MRS_opt(ii).TE1/2) - ((TE/2 + MRS_opt(ii).TE1/2)/2), ... %middle 1st EDITING to middle REFOC2
-                            (3*TE/4 + MRS_opt(ii).TE1/4) - ((TE/2 + MRS_opt(ii).TE1/2)), ... %middle REFOC2 to middle 2nd EDITING
-                            TE - (3*TE/4 + MRS_opt(ii).TE1/4)];                              %middle 2nd EDITING to the start of readout
+                                ((TE/2 + MRS_opt(ii).TE1/2)/2) - MRS_opt(ii).TE1/2, ...          %middleREFOC1 to middle 1st EDITING
+                                (TE/2 + MRS_opt(ii).TE1/2) - ((TE/2 + MRS_opt(ii).TE1/2)/2), ... %middle 1st EDITING to middle REFOC2
+                                (3*TE/4 + MRS_opt(ii).TE1/4) - ((TE/2 + MRS_opt(ii).TE1/2)), ... %middle REFOC2 to middle 2nd EDITING
+                                TE - (3*TE/4 + MRS_opt(ii).TE1/4)];                              %middle 2nd EDITING to the start of readout
                         % ********************SET UP SIMULATION**********************************
 
                         %Calculate new delays by subtracting the pulse durations from the taus vector
@@ -117,8 +117,7 @@ for ii = 1:length(MRS_opt)
             d = sim_excite(MRS_opt(ii).d, MRS_opt(ii).H,'x');                                          %EXCITE
             d = sim_apply_pfilter(d, MRS_opt(ii).H, -1);
             d = sim_evolve(d, MRS_opt(ii).H, MRS_opt(ii).delays(1)/2e3); % scnh /1000 or /2000 ???
-            parfor X = 1:length(MRS_opt(ii).x)
-                % for X=1:length(MRS_opt(ii).x) % scnh
+            parfor (X = 1:length(MRS_opt(ii).x), MRS_opt.parallelize.workers)
                 d_temp     = apply_propagator_refoc(d, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});  %#ok<*PFBNS> %Refocusing in the X-direction
                 d_temp2{X} = d_temp;
             end
@@ -138,7 +137,7 @@ for ii = 1:length(MRS_opt)
             d = sim_excite(MRS_opt(ii).d, MRS_opt(ii).H, 'x'); %EXCITE
             d = sim_apply_pfilter(d, MRS_opt(ii).H, -1);
             d = sim_evolve(d, MRS_opt(ii).H, MRS_opt(ii).delays(1)/1e3);
-            parfor X = 1:length(MRS_opt(ii).x)
+            parfor (X = 1:length(MRS_opt(ii).x), MRS_opt.parallelize.workers)
                 d_temp     = apply_propagator_refoc(d, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X}); %Refocusing in the X-direction
                 d_temp2{X} = d_temp;
             end
@@ -202,7 +201,7 @@ for ii = 1:length(MRS_opt)
             % 
             % end %end of spatial loop (parfor) in y direction.
         otherwise
-            d_A = struct([]);
+            d_A = struct([]); %#ok<*NASGU>
             d_B = struct([]);
             d_C = struct([]);
             d_D = struct([]);
@@ -241,13 +240,13 @@ for ii = 1:length(MRS_opt)
 
             d_A = MRS_opt(ii).d;
 
-            parfor Y = 1:length(MRS_opt(ii).y) %Use this if you do have the MATLAB parallel processing toolbox
+            parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
                 outA_temp{Y} = sim_press_shaped_ultrafast_Ref2(MRS_opt(ii), MRS_opt(ii).Qrefoc{Y}, d_A);
             end %end of spatial loop (parfor) in y direction.
 
         otherwise
 
-            parfor Y = 1:length(MRS_opt(ii).y)  %Use this if you do have the MATLAB parallel processing toolbox
+            parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
                 % disp(['Executing Y-position ' num2str(Y) ' of ' num2str(length(MRS_opt(ii).y))])
                 if ~strcmp(MRS_opt(ii).seq, 'MEGA')
                     [outA_temp{Y}, outB_temp{Y}, outC_temp{Y}, outD_temp{Y}] = sim_megapress_shaped_ultrafast_Ref2(MRS_opt(ii), MRS_opt(ii).Qrefoc{Y}, d_A, d_B, d_C, d_D);
@@ -289,24 +288,11 @@ for ii = 1:length(MRS_opt)
             d_Cy=struct([]);
             d_Dy=struct([]);
     end
-    %              d_Ay=struct([]);
-    %             d_By=struct([]);
-    %         if ~strcmp(MRS_opt(ii).seq, 'MEGA')
-    %         d_Cy=struct([]);
-    %         d_Dy=struct([]);
-    %     end
+
     for Y = 1:length(MRS_opt(ii).y)
         switch mega_or_hadam
             case 'UnEdited'
-                %d_Ay         =sim_dAdd(d_Ay,outA_temp{Y});
                 d_Ay = sim_dAdd(d_Ay, outA_temp{Y}); % scnh
-                %outA_temp{Y} =sim_apply_pfilter(outA_temp{Y},MRS_opt(ii).H,-1); % scnh
-                %outA_temp{Y}=sim_evolve(outA_temp{Y},MRS_opt(ii).H,(delays(2))/2000);                     %Evolve by (delays(1)+delays(2))/2
-                %[outY]                  = sim_readout(outA_temp{Y},MRS_opt.H,MRS_opt.Npts,MRS_opt.sw,MRS_opt.lw,90);
-                %figure (7)
-                %hold on
-                %plot(outY.ppm,real(outY.specs),'k')
-                %Y
             case 'MEGA'
                 d_Ay = sim_dAdd(d_Ay, outA_temp{Y});
                 d_By = sim_dAdd(d_By, outB_temp{Y});
@@ -317,14 +303,6 @@ for ii = 1:length(MRS_opt)
                 d_Dy = sim_dAdd(d_Dy, outD_temp{Y});
         end
     end
-    %     for Y=1:length(MRS_opt(ii).y)
-    %         d_Ay         =sim_dAdd(d_Ay,outA_temp{Y});
-    %         d_By         =sim_dAdd(d_By,outB_temp{Y});
-    %         if ~strcmp(MRS_opt(ii).seq, 'MEGA')
-    %             d_Cy         =sim_dAdd(d_Cy,outC_temp{Y});
-    %             d_Dy         =sim_dAdd(d_Dy,outD_temp{Y});
-    %         end
-    %     end
 
     %Now running the tail end of the seqeunce: %pfilter-delay4-editing-delay5-RO
     switch mega_or_hadam
@@ -340,12 +318,6 @@ for ii = 1:length(MRS_opt)
         case {'HERMES', 'HERCULES', 'HERMES_GABA_GSH_EtOH'}
             [outA, outB, outC, outD] = sim_megapress_shaped_ultrafast_readout(MRS_opt(ii), d_Ay, d_By, d_Cy, d_Dy);
     end
-
-    %     if ~strcmp(MRS_opt(ii).seq, 'MEGA')
-    %         [outA,outB,outC,outD] = sim_megapress_shaped_ultrafast_readout(MRS_opt(ii),d_Ay,d_By,d_Cy,d_Dy);
-    %     else
-    %         [outA,outB,~,~]       = sim_megapress_shaped_ultrafast_readout(MRS_opt(ii),d_Ay,d_By);
-    %     end
 
     %For consistent scaling across different shaped simulations, we need to :
     %1.  Scale down by the total number of simulations run (since these were
@@ -363,14 +335,6 @@ for ii = 1:length(MRS_opt)
             outC = op_ampScale(outC, 1/numSims);
             outD = op_ampScale(outD, 1/numSims);
     end
-
-    %     numSims=(MRS_opt(ii).nX*MRS_opt(ii).nY);
-    %     outA=op_ampScale(outA,1/numSims);
-    %     outB=op_ampScale(outB,1/numSims);
-    %     if ~strcmp(MRS_opt(ii).seq, 'MEGA')
-    %         outC=op_ampScale(outC,1/numSims);
-    %         outD=op_ampScale(outD,1/numSims);
-    %     end
 
     %2.  Scale by the total size of the simulated region, relative to the size
     %    of the voxel.
@@ -392,13 +356,6 @@ for ii = 1:length(MRS_opt)
             outC = op_ampScale(outC, 1/voxRatio);
             outD = op_ampScale(outD, 1/voxRatio);
     end
-
-    %     outA=op_ampScale(outA,1/voxRatio);
-    %     outB=op_ampScale(outB,1/voxRatio);
-    %     if ~strcmp(MRS_opt(ii).seq, 'MEGA')
-    %         outC=op_ampScale(outC,1/voxRatio);
-    %         outD=op_ampScale(outD,1/voxRatio);
-    %     end
 
     % Correct residual DC offset
     switch mega_or_hadam
@@ -433,24 +390,24 @@ for ii = 1:length(MRS_opt)
 end
 end
 
-%Nested Function #1, create a dual-lobe pulse with a fixed 20 ms pulse
-function dl_struct = dual_lobe_split_fn(sl_struct, dl_split, tw1)
-
-%Load sl editing RF waveform
-SG_sl               = sl_struct;
-SG_sl_dur           = 20; %ms - duration of the editing pulse
-time2               = 1:200; %200 points
-time2               = time2 / 200 * SG_sl_dur/1e3;
-%CALCULATE THE SPLITTING
-split               = dl_split;
-COSCOS              = 2*cos((time2 - 0.01005)*pi*split);
-%Add the COS modulation
-SG_dl               = SG_sl;
-SG_dl.waveform(:,2) = SG_sl.waveform(:,2) .* COSCOS.';
-SG_dl.tw1           = tw1;
-dl_struct           = SG_dl;
-
-end
+% %Nested Function #1, create a dual-lobe pulse with a fixed 20 ms pulse
+% function dl_struct = dual_lobe_split_fn(sl_struct, dl_split, tw1)
+% 
+% %Load sl editing RF waveform
+% SG_sl               = sl_struct;
+% SG_sl_dur           = 20; %ms - duration of the editing pulse
+% time2               = 1:200; %200 points
+% time2               = time2 / 200 * SG_sl_dur/1e3;
+% %CALCULATE THE SPLITTING
+% split               = dl_split;
+% COSCOS              = 2*cos((time2 - 0.01005)*pi*split);
+% %Add the COS modulation
+% SG_dl               = SG_sl;
+% SG_dl.waveform(:,2) = SG_sl.waveform(:,2) .* COSCOS.';
+% SG_dl.tw1           = tw1;
+% dl_struct           = SG_dl;
+% 
+% end
 
 %Nested Function #2
 function [d1, d2, d3, d4] = sim_megapress_shaped_ultrafast_edit1(MRS_opt)

@@ -70,7 +70,7 @@ for ii = 1:length(MRS_opt)
 
     %% AFP pulse x-direction
     if MRS_opt(ii).parallelize
-        parfor X = 1:length(MRS_opt(ii).x)
+        parfor (X = 1:length(MRS_opt(ii).x),  MRS_opt.parallelize.workers)
 
             % RF 1
             d1_x{X} = apply_propagator_refoc(d1_edit1, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X}); %#ok<*PFBNS>
@@ -131,7 +131,7 @@ for ii = 1:length(MRS_opt)
 
     %% AFP pulse y-direction
     if MRS_opt(ii).parallelize
-        parfor Y = 1:length(MRS_opt(ii).y)
+        parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
 
             % RF 3
             d1_y{Y} = apply_propagator_refoc(d_Ax, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});

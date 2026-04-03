@@ -553,7 +553,7 @@ if any(strcmp(MRS_opt.seq, {'UnEdited_se_MRSI', 'Edited_se_MRSI'}))
     % excWaveform   = 'Philips_spredrex.pta';
     RF_struct     = io_loadRFwaveform(excWaveform,'exc',0);
     MRS_opt.excRF = RF_struct;
-    parfor X = 1:length(MRS_opt.x)
+    parfor (X = 1:length(MRS_opt.x), MRS_opt.parallelize.workers)
         Q_exc{X} = calc_shapedRF_propagator_exc(MRS_opt.H, MRS_opt.excRF, MRS_opt.excTp, MRS_opt.excflipAngle, 0, MRS_opt.y(X), MRS_opt.Gx_exc);
     end
     MRS_opt.Qexc = Q_exc;
@@ -561,12 +561,12 @@ end
 
 % Load refocusing pulse(s)
 if any(strcmp(MRS_opt.seq, {'UnEdited', 'MEGA', 'HERMES', 'HERCULES', 'HERMES_GABA_GSH_EtOH'}))
-    parfor X = 1:length(MRS_opt.x)
+    parfor (X = 1:length(MRS_opt.x), MRS_opt.parallelize.workers)
         Q_refoc{X} = calc_shapedRF_propagator_refoc(MRS_opt.H, MRS_opt.refRF, MRS_opt.refTp, MRS_opt.flipAngle, 0, MRS_opt.y(X), MRS_opt.Gx); %#ok<*PFBNS>
     end
     MRS_opt.Q_refoc = Q_refoc;
 elseif strcmp(MRS_opt.seq, 'MQC')
-    parfor X = 1:length(MRS_opt.x)
+    parfor (X = 1:length(MRS_opt.x), MRS_opt.parallelize.workers)
         Q_refoc{X}  = calc_shapedRF_propagator_refoc(MRS_opt.H, MRS_opt.refRF, MRS_opt.refTp, MRS_opt.flipAngle, 90, MRS_opt.x(X), MRS_opt.Gx);
         Q_refoc2{X} = calc_shapedRF_propagator_refoc(MRS_opt.H, MRS_opt.refRF2, MRS_opt.refTp2, MRS_opt.flipAngle, 0, MRS_opt.z(X), MRS_opt.Gz);
     end

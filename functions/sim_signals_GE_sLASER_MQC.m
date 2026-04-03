@@ -58,14 +58,14 @@ for ii = 1:length(MRS_opt)
 
     %% AFP pulse x-direction
     % First AFP
-    parfor X = 1:length(MRS_opt(ii).x)
+    parfor (X = 1:length(MRS_opt(ii).x), MRS_opt.parallelize.workers)
         d_x{X} = apply_propagator_refoc(d, MRS_opt(ii).H, MRS_opt(ii).Q_refoc{X}); %#ok<*PFBNS>
         d_x{X} = sim_apply_pfilter(d_x{X}, MRS_opt(ii).H, -1); % -1
         d_x{X} = sim_evolve(d_x{X}, MRS_opt(ii).H, delays(2)/1e3);
     end
 
     % Second AFP
-    parfor X = 1:length(MRS_opt(ii).x)
+    parfor (X = 1:length(MRS_opt(ii).x), MRS_opt.parallelize.workers)
         d_x{X} = apply_propagator_refoc(d_x{X}, MRS_opt(ii).H, MRS_opt(ii).Q_refoc{X});
         d_x{X} = sim_apply_pfilter(d_x{X}, MRS_opt(ii).H, +1); % +1
         d_x{X} = sim_evolve(d_x{X}, MRS_opt(ii).H, delays(3)/1e3);
@@ -84,7 +84,7 @@ for ii = 1:length(MRS_opt)
     d_edit1 = sim_evolve(d_edit1, MRS_opt(ii).H, delays(4)/1e3);
 
     %% S-BREBOP-7500 pulse z-direction
-    parfor Z = 1:length(MRS_opt(ii).z)
+    parfor (Z = 1:length(MRS_opt(ii).z), MRS_opt.parallelize.workers)
         d_z{Z} = apply_propagator_refoc(d_edit1, MRS_opt(ii).H, MRS_opt(ii).Q_refoc2{Z});
         d_z{Z} = sim_apply_pfilter(d_z{Z}, MRS_opt(ii).H, -2); % -2
         d_z{Z} = sim_evolve(d_z{Z}, MRS_opt(ii).H, delays(5)/1e3);
@@ -103,7 +103,7 @@ for ii = 1:length(MRS_opt)
     d_edit2 = sim_evolve(d_edit2, MRS_opt(ii).H, delays(6)/1e3);
 
     %% AFP pulse y-direction
-    parfor Y = 1:length(MRS_opt(ii).y)
+    parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
         % Third AFP
         d_y{Y} = apply_propagator_refoc(d_edit2, MRS_opt(ii).H, MRS_opt(ii).Q_refoc{Y});
         d_y{Y} = sim_apply_pfilter(d_y{Y}, MRS_opt(ii).H, +1); % +1

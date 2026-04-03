@@ -105,7 +105,7 @@ for ii = 1:length(MRS_opt)
             d = sim_apply_pfilter(d, MRS_opt(ii).H, -1);
             d = sim_evolve(d, MRS_opt(ii).H, MRS_opt(ii).delays(1)/1e3);
             
-            parfor X=1:length(MRS_opt(ii).x)
+            parfor (X = 1:length(MRS_opt(ii).x), MRS_opt.parallelize.workers)
                 d_temp     = apply_propagator_refoc(d, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
                 d_temp     = sim_apply_pfilter(d_temp, MRS_opt(ii).H, +1);
                 d_temp     = sim_evolve(d_temp, MRS_opt(ii).H, (delays(2)/1e3));
@@ -146,7 +146,7 @@ for ii = 1:length(MRS_opt)
 
             [outA_temp, outB_temp, outC_temp, outD_temp] = deal(cell(1,length(MRS_opt(ii).x)));
 
-            parfor X = 1:length(MRS_opt(ii).x)
+            parfor (X = 1:length(MRS_opt(ii).x), MRS_opt.parallelize.workers)
 
                 d_temp = apply_propagator_refoc(d, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});  %#ok<*PFBNS> %Refocusing in the x-direction
                 d_temp = sim_apply_pfilter(d_temp, MRS_opt(ii).H, +1);                     %Apply p_filter % added on Dec 9
@@ -206,8 +206,7 @@ for ii = 1:length(MRS_opt)
     switch mega_or_hadam
 
         case 'UnEdited'
-            parfor Y=1:length(MRS_opt(ii).y)
-                % for X=1:length(MRS_opt(ii).x) % scnh
+            parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
                 d_temp     = apply_propagator_refoc(d_A,MRS_opt(ii).H,MRS_opt(ii).Qrefoc{Y});  %Refocusing in the X-direction
                 d_temp     = sim_apply_pfilter(d_temp,MRS_opt(ii).H,+1);                   %Apply p_filter % added on Dec 9
                 d_temp     = sim_evolve(d_temp,MRS_opt(ii).H,(delays(4)/1e3));                     %Evolve by (delays(1)+delays(2))/2
@@ -224,8 +223,7 @@ for ii = 1:length(MRS_opt)
             MRS_opt(ii).d = d_Ay; %From here, transfer to the fminsearch loop
             
         case {'MEGA','HERMES','HERCULES'}
-            parfor Y = 1:length(MRS_opt(ii).y)
-            % for Y=1:length(MRS_opt(ii).y)  %Use this if you do have the MATLAB parallel processing toolbox
+            parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
                 if ~strcmp(MRS_opt(ii).seq, 'MEGA')
                     [outA_temp{Y}, outB_temp{Y}, outC_temp{Y}, outD_temp{Y}] = sim_mega_slaser_shaped_ultrafast_Ref2(MRS_opt(ii),MRS_opt(ii).Qrefoc{Y},d_Ax,d_Bx,d_Cx,d_Dx);
                 else
