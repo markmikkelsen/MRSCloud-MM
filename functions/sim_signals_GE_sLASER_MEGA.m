@@ -69,54 +69,28 @@ for ii = 1:length(MRS_opt)
     d2_edit1 = sim_evolve(d2_edit1, MRS_opt(ii).H, delays(2)/1e3);
 
     %% AFP pulse x-direction
-    if MRS_opt(ii).parallelize
-        parfor (X = 1:length(MRS_opt(ii).x),  MRS_opt.parallelize.workers)
+    parfor (X = 1:length(MRS_opt(ii).x),  MRS_opt.parallelize.workers)
 
-            % RF 1
-            d1_x{X} = apply_propagator_refoc(d1_edit1, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X}); %#ok<*PFBNS>
-            d2_x{X} = apply_propagator_refoc(d2_edit1, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
+        % RF 1
+        d1_x{X} = apply_propagator_refoc(d1_edit1, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X}); %#ok<*PFBNS>
+        d2_x{X} = apply_propagator_refoc(d2_edit1, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
 
-            d1_x{X} = sim_apply_pfilter(d1_x{X}, MRS_opt(ii).H, +1);
-            d2_x{X} = sim_apply_pfilter(d2_x{X}, MRS_opt(ii).H, +1);
+        d1_x{X} = sim_apply_pfilter(d1_x{X}, MRS_opt(ii).H, +1);
+        d2_x{X} = sim_apply_pfilter(d2_x{X}, MRS_opt(ii).H, +1);
 
-            d1_x{X} = sim_evolve(d1_x{X}, MRS_opt(ii).H, delays(3)/1e3);
-            d2_x{X} = sim_evolve(d2_x{X}, MRS_opt(ii).H, delays(3)/1e3);
+        d1_x{X} = sim_evolve(d1_x{X}, MRS_opt(ii).H, delays(3)/1e3);
+        d2_x{X} = sim_evolve(d2_x{X}, MRS_opt(ii).H, delays(3)/1e3);
 
-            % RF 2
-            d1_x{X} = apply_propagator_refoc(d1_x{X}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
-            d2_x{X} = apply_propagator_refoc(d2_x{X}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
+        % RF 2
+        d1_x{X} = apply_propagator_refoc(d1_x{X}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
+        d2_x{X} = apply_propagator_refoc(d2_x{X}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
 
-            d1_x{X} = sim_apply_pfilter(d1_x{X}, MRS_opt(ii).H, -1);
-            d2_x{X} = sim_apply_pfilter(d2_x{X}, MRS_opt(ii).H, -1);
+        d1_x{X} = sim_apply_pfilter(d1_x{X}, MRS_opt(ii).H, -1);
+        d2_x{X} = sim_apply_pfilter(d2_x{X}, MRS_opt(ii).H, -1);
 
-            d1_x{X} = sim_evolve(d1_x{X}, MRS_opt(ii).H, delays(4)/1e3);
-            d2_x{X} = sim_evolve(d2_x{X}, MRS_opt(ii).H, delays(4)/1e3);
+        d1_x{X} = sim_evolve(d1_x{X}, MRS_opt(ii).H, delays(4)/1e3);
+        d2_x{X} = sim_evolve(d2_x{X}, MRS_opt(ii).H, delays(4)/1e3);
 
-        end
-    else
-        for X = 1:length(MRS_opt(ii).x)
-
-            % RF 1
-            d1_x{X} = apply_propagator_refoc(d1_edit1, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
-            d2_x{X} = apply_propagator_refoc(d2_edit1, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
-
-            d1_x{X} = sim_apply_pfilter(d1_x{X}, MRS_opt(ii).H, +1);
-            d2_x{X} = sim_apply_pfilter(d2_x{X}, MRS_opt(ii).H, +1);
-
-            d1_x{X} = sim_evolve(d1_x{X}, MRS_opt(ii).H, delays(3)/1e3);
-            d2_x{X} = sim_evolve(d2_x{X}, MRS_opt(ii).H, delays(3)/1e3);
-
-            % RF 2
-            d1_x{X} = apply_propagator_refoc(d1_x{X}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
-            d2_x{X} = apply_propagator_refoc(d2_x{X}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{X});
-
-            d1_x{X} = sim_apply_pfilter(d1_x{X}, MRS_opt(ii).H, -1);
-            d2_x{X} = sim_apply_pfilter(d2_x{X}, MRS_opt(ii).H, -1);
-
-            d1_x{X} = sim_evolve(d1_x{X}, MRS_opt(ii).H, delays(4)/1e3);
-            d2_x{X} = sim_evolve(d2_x{X}, MRS_opt(ii).H, delays(4)/1e3);
-
-        end
     end
 
     d_Ax = struct([]);
@@ -130,74 +104,38 @@ for ii = 1:length(MRS_opt)
     end
 
     %% AFP pulse y-direction
-    if MRS_opt(ii).parallelize
-        parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
+    parfor (Y = 1:length(MRS_opt(ii).y), MRS_opt.parallelize.workers)
 
-            % RF 3
-            d1_y{Y} = apply_propagator_refoc(d_Ax, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
-            d2_y{Y} = apply_propagator_refoc(d_Bx, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
+        % RF 3
+        d1_y{Y} = apply_propagator_refoc(d_Ax, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
+        d2_y{Y} = apply_propagator_refoc(d_Bx, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
 
-            d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, +1);
-            d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, +1);
+        d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, +1);
+        d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, +1);
 
-            d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(5)/1e3);
-            d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(5)/1e3);
+        d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(5)/1e3);
+        d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(5)/1e3);
 
-            % EDIT 2
-            d1_y{Y} = apply_propagator_edit(d1_y{Y}, MRS_opt(ii).H, MRS_opt(ii).QoutONA);
-            d2_y{Y} = apply_propagator_edit(d2_y{Y}, MRS_opt(ii).H, MRS_opt(ii).QoutONB);
+        % EDIT 2
+        d1_y{Y} = apply_propagator_edit(d1_y{Y}, MRS_opt(ii).H, MRS_opt(ii).QoutONA);
+        d2_y{Y} = apply_propagator_edit(d2_y{Y}, MRS_opt(ii).H, MRS_opt(ii).QoutONB);
 
-            d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, +1);
-            d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, +1);
+        d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, +1);
+        d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, +1);
 
-            d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(6)/1e3);
-            d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(6)/1e3);
+        d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(6)/1e3);
+        d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(6)/1e3);
 
-            % RF 4
-            d1_y{Y} = apply_propagator_refoc(d1_y{Y}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
-            d2_y{Y} = apply_propagator_refoc(d2_y{Y}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
+        % RF 4
+        d1_y{Y} = apply_propagator_refoc(d1_y{Y}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
+        d2_y{Y} = apply_propagator_refoc(d2_y{Y}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
 
-            d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, -1);
-            d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, -1);
+        d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, -1);
+        d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, -1);
 
-            d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(7)/1e3);
-            d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(7)/1e3);
+        d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(7)/1e3);
+        d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(7)/1e3);
 
-        end
-    else
-        for Y = 1:length(MRS_opt(ii).y)
-
-            % RF 3
-            d1_y{Y} = apply_propagator_refoc(d_Ax, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
-            d2_y{Y} = apply_propagator_refoc(d_Bx, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
-
-            d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, +1);
-            d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, +1);
-
-            d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(5)/1e3);
-            d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(5)/1e3);
-
-            % EDIT 2
-            d1_y{Y} = apply_propagator_edit(d1_y{Y}, MRS_opt(ii).H, MRS_opt(ii).QoutONA);
-            d2_y{Y} = apply_propagator_edit(d2_y{Y}, MRS_opt(ii).H, MRS_opt(ii).QoutONB);
-
-            d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, +1);
-            d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, +1);
-
-            d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(6)/1e3);
-            d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(6)/1e3);
-
-            % RF 4
-            d1_y{Y} = apply_propagator_refoc(d1_y{Y}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
-            d2_y{Y} = apply_propagator_refoc(d2_y{Y}, MRS_opt(ii).H, MRS_opt(ii).Qrefoc{Y});
-
-            d1_y{Y} = sim_apply_pfilter(d1_y{Y}, MRS_opt(ii).H, -1);
-            d2_y{Y} = sim_apply_pfilter(d2_y{Y}, MRS_opt(ii).H, -1);
-
-            d1_y{Y} = sim_evolve(d1_y{Y}, MRS_opt(ii).H, delays(7)/1e3);
-            d2_y{Y} = sim_evolve(d2_y{Y}, MRS_opt(ii).H, delays(7)/1e3);
-
-        end
     end % end of spatial loop (parfor) in y-direction
 
     d_Ay = struct([]);

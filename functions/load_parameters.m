@@ -131,7 +131,7 @@ else
             if strcmp(MRS_opt.localization, 'PRESS')
                 refocWaveform = 'GE_rfa_3.9ms.pta'; % name of refocusing pulse waveform.
             else % sLASER GOIA pulse
-                refocWaveform = 'GE_GOIA_WURST';    % name of refocusing pulse waveform.
+                refocWaveform = 'GE_GOIA_WURST.mat';    % name of refocusing pulse waveform.
                 % refocWaveform = 'WURST_GOIA';    % name of refocusing pulse waveform.
                 % refocWaveform = 'HS16R45s.pta';    % name of refocusing pulse waveform.
             end
@@ -232,7 +232,7 @@ else
             if strcmp(MRS_opt.localization, 'PRESS')
                 refocWaveform = 'univ_eddenrefo.pta'; % name of refocusing pulse waveform.
             else % sLASER GOIA pulse
-                refocWaveform = 'GE_GOIA_WURST'; % name of refocusing pulse waveform.
+                refocWaveform = 'GE_GOIA_WURST.mat'; % name of refocusing pulse waveform.
             end
 
             if ~strcmp(MRS_opt.seq, 'UnEdited')
@@ -325,15 +325,17 @@ elseif ~any(strcmp(MRS_opt.seq, {'UnEdited', 'UnEdited_se_MRSI'}))
         editTp1 = MRS_opt.editTp; % duration of 1st editing pulse [ms]
         editTp2 = MRS_opt.editTp; % duration of 2nd editing pulse [ms]
     else % For HERMES and HERCULES, fix editing pulse duration to 20 ms
+        editTp1 = MRS_opt.editTp; % duration of 1st editing pulse [ms]
+        editTp2 = MRS_opt.editTp; % duration of 2nd editing pulse [ms]
         editTp3 = MRS_opt.editTp; % duration of 3rd editing pulse [ms]
         editTp4 = MRS_opt.editTp; % duration of 4th editing pulse [ms]
     end
-    MRS_opt.editTp  = editTp1;
-    MRS_opt.editTp1 = editTp1; % duration of 1st editing pulse [ms]
-    MRS_opt.editTp2 = editTp2; % duration of 2nd editing pulse [ms]
+    MRS_opt.editTp  = MRS_opt.editTp;
+    MRS_opt.editTp1 = MRS_opt.editTp; % duration of 1st editing pulse [ms]
+    MRS_opt.editTp2 = MRS_opt.editTp; % duration of 2nd editing pulse [ms]
     if ~any(strcmp(MRS_opt.seq, {'MEGA', 'Edited_se_MRSI'}))
-        MRS_opt.editTp3 = editTp3; % duration of 2nd editing pulse [ms]
-        MRS_opt.editTp4 = editTp4; % duration of 2nd editing pulse [ms]
+        MRS_opt.editTp3 = MRS_opt.editTp; % duration of 2nd editing pulse [ms]
+        MRS_opt.editTp4 = MRS_opt.editTp; % duration of 2nd editing pulse [ms]
     end
 end
 

@@ -13,7 +13,7 @@ switch refocWaveform
         load('Philips_GOIA_WURST_100pts.mat', 'Sweep2');
         refRF = Sweep2;
     case 'GE_GOIA_WURST.mat'
-        load('GE_GOIA_WURST_100pts.mat', 'Sweep_GE_100');
+        load('GE_GOIA_WURST.mat', 'Sweep_GE_100');
         refRF = Sweep_GE_100;
     case 'WURST_GOIA.mat'
         load('WURST_GOIA.mat','rf');

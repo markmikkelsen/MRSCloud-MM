@@ -101,7 +101,7 @@ switch(vendor{1})
         if strcmp(MRS_opt.localization, 'PRESS')
             refocWaveform           = 'GE_rfa_3.9ms.pta';                % name of refocusing pulse waveform.
         else % sLASER GOIA pulse
-            refocWaveform           = 'GE_GOIA_WURST';                % name of refocusing pulse waveform.
+            refocWaveform           = 'GE_GOIA_WURST.mat';                % name of refocusing pulse waveform.
         end
         
         if ~strcmp(MRS_opt.seq, 'UnEdited')
@@ -319,8 +319,8 @@ switch refocWaveform
         refRF.f0   = 0;
         %refRF.isGM = 1; %is the pulse gradient mdoulated? - 02262020 SH
         refRF.tthk = MRS_opt.thkX*(refTp/1000); %This is the time x sliceThickness product for gradient modulated pulses.  It is in units [cm.s]
-    case 'GE_GOIA_WURST'
-        load GE_GOIA_WURST_100pts.mat;
+    case 'GE_GOIA_WURST.mat'
+        load GE_GOIA_WURST.mat;
         refRF      = Sweep_GE_100;
         refTp      = 4.5; % (ms)
         BW         = 10; % (kHz)

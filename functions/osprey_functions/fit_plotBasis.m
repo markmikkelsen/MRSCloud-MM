@@ -25,7 +25,8 @@ function out = fit_plotBasis(basisSet, dim, stagFlag, ppmmin, ppmmax, xlab, ylab
 
 % Parse input arguments
 if nargin<8
-    figTitle = sprintf('Basis set for %s %s %s at TE = %i ms', regexprep(basisSet.vendor{1},'_',' '), basisSet.seq{1}, basisSet.localization{1}, basisSet.te);
+    figTitle = sprintf('Basis set for %s %s %s at TE = %g ms', ...
+        regexprep(basisSet.vendor{1},'_',' '), basisSet.seq{1}, basisSet.localization{1}, basisSet.te);
     if nargin<7
         ylab='';
         if nargin<6
@@ -64,32 +65,27 @@ end
 if stagFlag
     % Staggered plots will be in all black and separated by the mean of the
     % maximum across all spectra
-    stag = mean(max(real(basisSet.specs(:,:,dim))));
-    
+    stag = mean(max(real(basisSet.specs(:,:,dim))));    
     % Loop over all basis functions
-    hold on
+    hold on;
     for kk = 1:nBasisFct
         plot(basisSet.ppm, real(squeeze(basisSet.specs(:,kk,dim)) - kk*stag), 'k');
         % Instead of a MATLAB legend, annotate each line separately with the
         % name of the metabolite
-        text(ppmmin, - kk*stag, basisSet.name{kk}, 'FontSize', 14);
+        text(ppmmin, -kk*stag, basisSet.name{kk}, 'FontSize', 14);
     end
-    hold off
-    
-    
-    
+    hold off;
 else
     % If not staggered, plots will simply be made with distinguishable
     % colors
-    colours = distinguishable_colors(nBasisFct);
-    
+    colours = distinguishable_colors(nBasisFct);    
     % Loop over all basis functions
-    hold on
+    hold on;
     for kk = 1:nBasisFct
         plot(basisSet.ppm, squeeze(basisSet.specs(:,kk,dim)), 'Color', colours(kk,:));
     end
     legend(basisSet.name);
-    hold off
+    hold off;
 end
 
 % Common style for all outputs
