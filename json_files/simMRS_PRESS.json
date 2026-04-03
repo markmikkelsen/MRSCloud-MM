@@ -1,7 +1,7 @@
 {
   "userInput": {
     "metablist": ["GABA", "Glu", "PCh", "PCr"],
-    "vendor": ["Universal_GE"],
+    "vendor": ["Philips"],
     "B0": 3.0,
     "mega_or_hadam": ["UnEdited"],
     "localization": ["PRESS"],
@@ -31,8 +31,8 @@
     "exc_flipAngle": 90
   },
   "DIRECTORY": {
-    "work_dir": "/Users/mmikkel/Desktop/MRSCloud/",
-    "save_dir": "/Users/mmikkel/Desktop/MRSCloud/out/",
-    "outputFile": "/Users/mmikkel/Desktop/MRSCloud/out.zip"
+    "work_dir": "/Users/mmikkel/Desktop/MRSCloud_PRESS/",
+    "save_dir": "/Users/mmikkel/Desktop/MRSCloud_PRESS/out/",
+    "outputFile": "/Users/mmikkel/Desktop/MRSCloud_PRESS/out.zip"
   }
 }

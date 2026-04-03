@@ -31,8 +31,8 @@
     "exc_flipAngle": 90
   },
   "DIRECTORY": {
-    "work_dir": "/Users/mmikkel/Desktop/MRSCloud/",
-    "save_dir": "/Users/mmikkel/Desktop/MRSCloud/out/",
-    "outputFile": "/Users/mmikkel/Desktop/MRSCloud/out.zip"
+    "work_dir": "/Users/mmikkel/Desktop/MRSCloud_sLASER/",
+    "save_dir": "/Users/mmikkel/Desktop/MRSCloud_sLASER/out/",
+    "outputFile": "/Users/mmikkel/Desktop/MRSCloud_sLASER/out.zip"
   }
 }
