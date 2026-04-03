@@ -1,0 +1,44 @@
+{
+    "userInput": {
+        "metablist": [
+            "Asc",
+            "Asp",
+            "CrCH2",
+            "GABA",
+            "GPC",
+            "GSH",
+            "Gln",
+            "Glu",
+            "mI",
+            "Lac",
+            "NAAG",
+            "PCh",
+            "PCr",
+            "PE", 
+            "Tau",
+            "sI"
+        ],
+        "vendor": ["GE"],
+        "mega_or_hadam": ["MEGA"],
+        "localization": ["sLASER"],
+        "editTarget": ["GSH"],
+      	"TE": 140,
+      	"editOn": 4.56,
+      	"editOff": 7.5,
+        "editTp": 20,
+        "spatial_points": 101,
+        "tm": 30
+    },
+    "private": {
+        "metab_default": ["Cr", "NAA", "H2O"],
+        "flipAngle": 180,
+        "centreFreq": 3.0,
+        "edit_flipAngle": 180,
+        "excflipAngle": 90
+    },
+    "DIRECTORY":{
+        "work_dir": "/Users/mmikkel/Desktop/MRSCloud_sLASER_Seung/",
+        "save_dir": "/Users/mmikkel/Desktop/MRSCloud_sLASER_Seung/out/",
+        "outputFile": "/Users/mmikkel/Desktop/MRSCloud_sLASER_Seung/out.zip"
+    }
+}

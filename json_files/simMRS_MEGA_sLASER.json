@@ -1,0 +1,67 @@
+{
+  "userInput": {
+    "metablist": [
+      "Asc",
+      "Asp",
+      "bHB",
+      "CrCH2",
+      "GPC",
+      "GABA",
+      "Gln",
+      "Glu",
+      "GSH",
+      "Lac",
+      "mI",
+      "NAAG",
+      "NAA",
+      "PCh",
+      "PCr",
+      "sI",
+      "Tau"
+    ],
+    "vendor": ["GE"],
+    "B0": 3.0,
+    "mega_or_hadam": ["MEGA"],
+    "localization": ["sLASER"],
+    "editTarget": ["GSH"],
+    "TE": 82,
+    "taus": [11.758, 15.596, 6.344, 5.542, 13.518, 21.139, 8.103],
+    "spatial_points": 101,
+    "tm": 30,
+    "pulses": {
+      "exc": {
+        "name": "",
+        "duration": [],
+        "bandwidth": []
+      },
+      "ref": {
+        "name": "GE_GOIA_WURST.mat",
+        "duration": 4.5,
+        "bandwidth": 10
+      },
+      "edit": {
+        "duration": 20,
+        "edit1": {
+          "name": "sl_univ_pulse.pta",
+          "offset": 7.5
+        },
+        "edit2": {
+          "name": "sl_univ_pulse.pta",
+          "offset": 1.9
+        }
+      }
+    }
+  },
+  "private": {
+    "metab_default": ["Cr", "NAA", "H2O"],
+    "flipAngle": 180,
+    "centreFreq": 3.0,
+    "edit_flipAngle": 180,
+    "exc_flipAngle": 90
+  },
+  "DIRECTORY": {
+    "work_dir": "/Users/mmikkel/Desktop/MRSCloud_MEGA_sLASER/",
+    "save_dir": "/Users/mmikkel/Desktop/MRSCloud_MEGA_sLASER/out/",
+    "outputFile": "/Users/mmikkel/Desktop/MRSCloud_MEGA_sLASER/out.zip"
+  }
+}

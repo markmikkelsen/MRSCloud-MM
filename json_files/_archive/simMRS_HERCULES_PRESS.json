@@ -1,0 +1,45 @@
+{
+    "userInput": {
+        "metablist": [
+            "Asc",
+            "Asp",
+            "bHB",
+            "CrCH2",
+            "GABA",
+            "GPC",
+            "GSH",
+            "Gln",
+            "Glu",
+            "mI",
+            "Lac",
+            "NAAG",
+            "PCh",
+            "PCr",
+            "PE", 
+            "Tau",
+            "sI"
+        ],
+        "vendor": ["Universal_GE"],
+        "mega_or_hadam": ["HERCULES"],
+        "localization": ["PRESS"],
+        "editTarget": ["GABA"],
+      	"TE": 82,
+      	"editOn": 1.9,
+      	"editOff": 7.5,
+        "editTp": 20,
+        "spatial_points": 101,
+        "tm": 30
+    },
+    "private": {
+        "metab_default": ["Cr", "NAA", "H2O"],
+        "flipAngle": 180,
+        "centreFreq": 3.0,
+        "edit_flipAngle": 180,
+        "excflipAngle": 90
+    },
+    "DIRECTORY":{
+        "work_dir": "/Users/mmikkel/Desktop/MRSCloud_HERCULES_PRESS/",
+        "save_dir": "/Users/mmikkel/Desktop/MRSCloud_HERCULES_PRESS/out/",
+        "outputFile": "/Users/mmikkel/Desktop/MRSCloud_HERCULES_PRESS/out.zip"
+    }
+}

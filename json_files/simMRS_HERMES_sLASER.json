@@ -1,0 +1,75 @@
+{
+  "userInput": {
+    "metablist": [
+      "Asc",
+      "Asp",
+      "bHB",
+      "CrCH2",
+      "GABA",
+      "GPC",
+      "GSH",
+      "Gln",
+      "Glu",
+      "mI",
+      "Lac",
+      "NAAG",
+      "PCh",
+      "PCr",
+      "PE",
+      "Tau",
+      "sI"
+    ],
+    "vendor": ["GE"],
+    "B0": 3.0,
+    "mega_or_hadam": ["HERMES"],
+    "localization": ["sLASER"],
+    "editTarget": ["GABA"],
+    "TE": 82,
+    "taus": [11.758, 15.596, 6.344, 5.542, 13.518, 21.139, 8.103],
+    "spatial_points": 101,
+    "tm": 30,
+    "pulses": {
+      "exc": {
+        "name": "",
+        "duration": [],
+        "bandwidth": []
+      },
+      "ref": {
+        "name": "GE_GOIA_WURST.mat",
+        "duration": 4.5,
+        "bandwidth": 10
+      },
+      "edit": {
+        "duration": 20,
+        "edit1": {
+          "name": "sl_univ_pulse.pta",
+          "offset": 4.56
+        },
+        "edit2": {
+          "name": "sl_univ_pulse.pta",
+          "offset": 1.9
+        },
+        "edit3": {
+          "name": "dl_Philips_univ_4_56_1_90.pta",
+          "offset": 3.23
+        },
+        "edit4": {
+          "name": "sl_univ_pulse.pta",
+          "offset": 7.5
+        }
+      }
+    }
+  },
+  "private": {
+    "metab_default": ["Cr", "NAA", "H2O"],
+    "flipAngle": 180,
+    "centreFreq": 3.0,
+    "edit_flipAngle": 180,
+    "exc_flipAngle": 90
+  },
+  "DIRECTORY": {
+    "work_dir": "/Users/mmikkel/Desktop/MRSCloud_HERMES_sLASER/",
+    "save_dir": "/Users/mmikkel/Desktop/MRSCloud_HERMES_sLASER/out/",
+    "outputFile": "/Users/mmikkel/Desktop/MRSCloud_HERMES_sLASER/out.zip"
+  }
+}

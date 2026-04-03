@@ -1,0 +1,31 @@
+{
+    "userInput": {
+        "metablist": [
+            "Asp",
+            "GSH",
+            "NAAG"
+        ],
+        "vendor": ["GE"],
+        "mega_or_hadam": ["MQC"],
+        "localization": ["sLASER"],
+        "editTarget": ["GSH"],
+      	"TE": 140,
+      	"editOn": 4.56,
+      	"editOff": 7.5,
+        "editTp": 7,
+        "spatial_points": 101,
+        "tm": 17
+    },
+    "private": {
+        "metab_default": ["Cr", "NAA", "H2O"],
+        "flipAngle": 180,
+        "centreFreq": 3.0,
+        "edit_flipAngle": 180,
+        "excflipAngle": 90
+    },
+    "DIRECTORY":{
+        "work_dir": "/Users/mmikkel/Desktop/MRSCloud_sLASER_MQC/",
+        "save_dir": "/Users/mmikkel/Desktop/MRSCloud_sLASER_MQC/out/",
+        "outputFile": "/Users/mmikkel/Desktop/MRSCloud_sLASER_MQC/out.zip"
+    }
+}

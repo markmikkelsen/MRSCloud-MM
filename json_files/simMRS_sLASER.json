@@ -1,0 +1,38 @@
+{
+  "userInput": {
+    "metablist": ["GABA", "Glu", "PCh", "PCr"],
+    "vendor": ["GE"],
+    "B0": 3.0,
+    "mega_or_hadam": ["UnEdited"],
+    "localization": ["sLASER"],
+    "editTarget": [],
+    "TE": 20.1,
+    "taus": [2.982, 4.3, 4.3, 5.75, 2.768],
+    "spatial_points": 101,
+    "tm": 30,
+    "pulses": {
+      "exc": {
+        "name": "",
+        "duration": [],
+        "bandwidth": []
+      },
+      "ref": {
+        "name": "HS16R45s.pta",
+        "duration": 3.5,
+        "bandwidth": 20
+      }
+    }
+  },
+  "private": {
+    "metab_default": ["Cr", "NAA", "H2O", "CrCH2"],
+    "flipAngle": 180,
+    "centreFreq": 3.0,
+    "edit_flipAngle": 180,
+    "exc_flipAngle": 90
+  },
+  "DIRECTORY": {
+    "work_dir": "/Users/mmikkel/Desktop/MRSCloud/",
+    "save_dir": "/Users/mmikkel/Desktop/MRSCloud/out/",
+    "outputFile": "/Users/mmikkel/Desktop/MRSCloud/out.zip"
+  }
+}

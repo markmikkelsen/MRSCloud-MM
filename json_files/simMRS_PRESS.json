@@ -1,0 +1,38 @@
+{
+  "userInput": {
+    "metablist": ["GABA", "Glu", "PCh", "PCr"],
+    "vendor": ["Universal_GE"],
+    "B0": 3.0,
+    "mega_or_hadam": ["UnEdited"],
+    "localization": ["PRESS"],
+    "editTarget": [],
+    "TE": 35,
+    "taus": [6.55, 28.45],
+    "spatial_points": 101,
+    "tm": 30,
+    "pulses": {
+      "exc": {
+        "name": "",
+        "duration": [],
+        "bandwidth": []
+      },
+      "ref": {
+        "name": "univ_eddenrefo.pta",
+        "duration": 7.0,
+        "bandwidth": 1.342
+      }
+    }
+  },
+  "private": {
+    "metab_default": ["Cr", "NAA", "H2O", "CrCH2"],
+    "flipAngle": 180,
+    "centreFreq": 3.0,
+    "edit_flipAngle": 180,
+    "exc_flipAngle": 90
+  },
+  "DIRECTORY": {
+    "work_dir": "/Users/mmikkel/Desktop/MRSCloud/",
+    "save_dir": "/Users/mmikkel/Desktop/MRSCloud/out/",
+    "outputFile": "/Users/mmikkel/Desktop/MRSCloud/out.zip"
+  }
+}
